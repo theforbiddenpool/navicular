@@ -6,6 +6,8 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+require('./src/db/index');
+
 app.use((req, res) => {
   res.status(404);
 });
