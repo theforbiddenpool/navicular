@@ -4,6 +4,10 @@ module.exports = (sequelize, DataTypes) => {
   class List extends Model {
     static associate(models) {
       this.belongsTo(models.User, { constraints: true });
+      this.hasMany(models.Item, {
+        constrains: false,
+        foreignKey: 'list_id',
+      });
     }
   }
 
