@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
   class Item extends Model {
     static associate(models) {
       this.belongsTo(models.List, { constraints: true });
+      this.belongsTo(models.Category, { constraints: false });
     }
   }
 
