@@ -11,7 +11,7 @@ function assembleModels(sequelize, modelsArray) {
       ...acc,
       [modelInstance.name]: modelInstance,
     };
-  });
+  }, {});
   Object.values(modelsObject).map((model) => model.associate && model.associate(modelsObject));
   return modelsObject;
 }
@@ -19,7 +19,7 @@ function assembleModels(sequelize, modelsArray) {
 async function testConnection(sequelize) {
   try {
     await sequelize.authenticate();
-    console.log('Connection has been established successfully');
+    console.log('Connection to the database has been established successfully');
   } catch (err) {
     console.error('Unable to connect to the database:', err);
   }
