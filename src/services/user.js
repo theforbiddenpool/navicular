@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { User } = require('../db').models;
 const HttpError = require('../utils/HttpError');
 
@@ -11,4 +12,28 @@ async function createUser({ username }) {
   await User.create({ username });
 }
 
-module.exports = { createUser };
+async function getUser(query) {
+  const user = await User.findOne({
+    where: {
+      [Op.or]: { ...query },
+    },
+  });
+  if (!user) throw new HttpError(404, 'User doesn\'t exist');
+  return user;
+}
+
+async function editUser({ id, ...body }) {
+  await User.update({ ...body }, {
+    where: {
+      id,
+    },
+  });
+}
+
+async function deleteUser({ id }) {
+  await User.destroy({ where: { id } });
+}
+
+module.exports = {
+  createUser, editUser, getUser, deleteUser,
+};

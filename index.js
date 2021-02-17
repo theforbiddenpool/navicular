@@ -11,9 +11,11 @@ require('./src/db/index');
 const routes = require('./src/routes');
 
 app.use('/api/auth', routes.auth);
+app.use('/api/users', routes.users);
 
 app.use((req, res, next) => next({ name: 'HttpError', status: 404, message: 'not found' }));
 
+// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   let errCode = 500;
   let errMessage = 'internal server error';
