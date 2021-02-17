@@ -11,5 +11,7 @@ module.exports = {
     ecmaVersion: 12,
   },
   rules: {
+    camelcase: ['error', { allow: ['_id$'] }],
+    'no-console': ['warn', { allow: ['error'] }],
   },
 };

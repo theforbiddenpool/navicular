@@ -8,13 +8,21 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 require('./src/db/index');
 
-app.use('/api/auth', require('./src/routes').auth);
+const routes = require('./src/routes');
 
-app.use((req, res, next) => next({ status: 404, message: 'not found' }));
+app.use('/api/auth', routes.auth);
+
+app.use((req, res, next) => next({ name: 'HttpError', status: 404, message: 'not found' }));
 
 app.use((err, req, res, next) => {
-  const errCode = err.status || 500;
-  const errMessage = err.message || 'Internal Server Error';
+  let errCode = 500;
+  let errMessage = 'internal server error';
+  if (err.name === 'HttpError') {
+    errCode = err.status;
+    errMessage = err.message;
+  } else {
+    console.error(err);
+  }
   res.status(errCode).json({ error: errMessage });
 });
 
